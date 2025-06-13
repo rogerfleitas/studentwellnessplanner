@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Student Wellness Planner</title>
+    <style>
+        :root {
+            --bg-color: #c6e2ff;
+            --header-bg: #a0c4e8;
+            --widget-bg: #ffffff;
+            --widget-border-color: #d8c8ff;
+            --text-color: #333333;
+            --text-light: #555555;
+            --accent-color: #8a63d2;
+            --button-bg: #e6e6fa;
+            --button-text: #333;
+            --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        body.dark-mode {
+            --bg-color: #232931;
+            --header-bg: #1a1f25;
+            --widget-bg: #393e46;
+            --widget-border-color: #5c5178;
+            --text-color: #eeeeee;
+            --text-light: #cccccc;
+            --accent-color: #b298dc;
+            --button-bg: #504660;
+            --button-text: #eeeeee;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: var(--widget-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-container h1 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--widget-border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: filter 0.2s;
+        }
+        .login-container button:hover {
+            filter: brightness(0.9);
+        }
+        .login-container p {
+            margin-top: 20px;
+            color: var(--text-light);
+        }
+        .login-container a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .error-message {
+            color: #f44336;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Welcome Back!</h1>
+        <p>Log in to your Student Wellness Planner</p>
+        <div id="errorMessage" class="error-message"></div>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button id="loginButton">Login</button>
+        <p>Don't have an account? <a href="create-account.html">Create one</a></p>
+    </div>
+
+    <script type="module">
+        // It looks like you're working with Firebase. To use the functions in this SDK,
+        // you need to set up your own Firebase project. You can find instructions
+        // on how to do that in the Firebase documentation.
+        // https://firebase.google.com/docs/web/setup
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyA5uXk2bnfbZ0ZMQSsRzOXzU4jjZN0-sPM",
+        authDomain: "studentwellnessplanner.firebaseapp.com",
+        projectId: "studentwellnessplanner",
+        storageBucket: "studentwellnessplanner.firebasestorage.app",
+        messagingSenderId: "1084830559333",
+        appId: "1:1084830559333:web:dc5d435854bad565476a8c"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const loginButton = document.getElementById('loginButton');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Redirect if user is already logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        loginButton.addEventListener('click', () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            if (!email || !password) {
+                errorMessage.textContent = 'Please enter both email and password.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    window.location.href = 'index.html';
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    let message = '';
+
+                    switch (errorCode) {
+                        case 'auth/invalid-email':
+                            message = 'Invalid email address.';
+                            break;
+                        case 'auth/user-not-found':
+                        case 'auth/wrong-password':
+                            message = 'Invalid email or password.';
+                            break;
+                        default:
+                            message = 'An error occurred. Please try again.';
+                            break;
+                    }
+                    errorMessage.textContent = message;
+                    errorMessage.style.display = 'block';
+                });
+        });
+    </script>
+</body>
+</html>

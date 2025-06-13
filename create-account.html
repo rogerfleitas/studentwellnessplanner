@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - Student Wellness Planner</title>
+    <style>
+        :root {
+            --bg-color: #c6e2ff;
+            --header-bg: #a0c4e8;
+            --widget-bg: #ffffff;
+            --widget-border-color: #d8c8ff;
+            --text-color: #333333;
+            --text-light: #555555;
+            --accent-color: #8a63d2;
+            --button-bg: #e6e6fa;
+            --button-text: #333;
+            --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        body.dark-mode {
+            --bg-color: #232931;
+            --header-bg: #1a1f25;
+            --widget-bg: #393e46;
+            --widget-border-color: #5c5178;
+            --text-color: #eeeeee;
+            --text-light: #cccccc;
+            --accent-color: #b298dc;
+            --button-bg: #504660;
+            --button-text: #eeeeee;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .create-account-container {
+            background-color: var(--widget-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .create-account-container h1 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        .create-account-container input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--widget-border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .create-account-container button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: filter 0.2s;
+        }
+        .create-account-container button:hover {
+            filter: brightness(0.9);
+        }
+        .create-account-container p {
+            margin-top: 20px;
+            color: var(--text-light);
+        }
+        .create-account-container a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .error-message {
+            color: #f44336;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="create-account-container">
+        <h1>Create Your Account</h1>
+        <p>Join the Student Wellness Planner community!</p>
+        <div id="errorMessage" class="error-message"></div>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password (at least 6 characters)" required>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <button id="createAccountButton">Create Account</button>
+        <p>Already have an account? <a href="login.html">Log in</a></p>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+        apiKey: "AIzaSyA5uXk2bnfbZ0ZMQSsRzOXzU4jjZN0-sPM",
+        authDomain: "studentwellnessplanner.firebaseapp.com",
+        projectId: "studentwellnessplanner",
+        storageBucket: "studentwellnessplanner.firebasestorage.app",
+        messagingSenderId: "1084830559333",
+        appId: "1:1084830559333:web:dc5d435854bad565476a8c"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const createAccountButton = document.getElementById('createAccountButton');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const errorMessage = document.getElementById('errorMessage');
+
+        createAccountButton.addEventListener('click', () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            if (!email || !password || !confirmPassword) {
+                errorMessage.textContent = 'Please fill out all fields.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Passwords do not match.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed up and signed in
+                    const user = userCredential.user;
+                    // Redirect to the main page
+                    window.location.href = 'index.html';
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    let message = '';
+                    switch (errorCode) {
+                        case 'auth/email-already-in-use':
+                            message = 'This email address is already in use.';
+                            break;
+                        case 'auth/invalid-email':
+                            message = 'Please enter a valid email address.';
+                            break;
+                        case 'auth/weak-password':
+                            message = 'The password is too weak. Please use at least 6 characters.';
+                            break;
+                        default:
+                            message = 'An error occurred during sign-up. Please try again.';
+                            break;
+                    }
+                    errorMessage.textContent = message;
+                    errorMessage.style.display = 'block';
+                });
+        });
+    </script>
+</body>
+</html>
