@@ -1169,7 +1169,6 @@
         onAuthStateChanged(auth, user => {
             if (user) {
                 currentUserId = user.uid;
-                // Define database references now that we have the user ID
                 dbRefs = {
                     userData: doc(db, 'users', currentUserId),
                     appData: doc(db, 'users', currentUserId, 'app', 'data'),
@@ -1187,7 +1186,6 @@
 
         // --- Main App Initialization ---
         async function initializeAppLogic() {
-            // Local state variables
             let todoCardsData = [], reminders = [], habitsData = [], notes = [], moodLog = [], pomodoroState = {}, focusStats = {}, streakData = {};
             let widgetOrder = [];
             let activeNoteId = null;
@@ -1195,9 +1193,11 @@
 
             // --- Data Helper Functions ---
             const fetchData = async () => {
-                const appDoc = await getDoc(dbRefs.appData);
-                const notesDoc = await getDoc(dbRefs.notes);
-                const userDoc = await getDoc(dbRefs.userData);
+                const [appDoc, notesDoc, userDoc] = await Promise.all([
+                    getDoc(dbRefs.appData),
+                    getDoc(dbRefs.notes),
+                    getDoc(dbRefs.userData)
+                ]);
 
                 const data = appDoc.data() || {};
                 const userData = userDoc.data() || {};
@@ -1243,20 +1243,16 @@
                 }
             };
 
-            // --- Initial Fetch ---
             await fetchData();
             
-            // --- Show App & Hide Loader ---
             loader.style.opacity = '0';
             setTimeout(() => {
                 loader.style.display = 'none';
                 appContainer.style.display = 'block';
             }, 300);
 
-            // --- Run All Setup Functions ---
             setupAllFeatures();
 
-            // --- Centralized Setup Function ---
             function setupAllFeatures() {
                 let typingIntervalId = null;
                 let pomodoroInterval;
@@ -1357,7 +1353,7 @@
                             </div>`;
                         widgetsContainer.appendChild(cardElement);
 
-                        cardData.tasks.forEach(task => addTaskToTodoCard(cardElement, task.text, task.completed, task.dueDate, task.id));
+                        (cardData.tasks || []).forEach(task => addTaskToTodoCard(cardElement, task.text, task.completed, task.dueDate, task.id));
                         updateProgressForCard(cardElement);
 
                         const cardTitleText = cardElement.querySelector('.card-title-text');
@@ -1465,6 +1461,7 @@
                         const cardElement = event.target.closest('.todo-card');
                         const cardData = todoCardsData.find(c => c.id === cardElement.id);
                         const newTask = { id: `task-${Date.now()}`, text: "New Task", completed: false, dueDate: '' };
+                        if (!cardData.tasks) cardData.tasks = [];
                         cardData.tasks.push(newTask);
                         addTaskToTodoCard(cardElement, newTask.text, newTask.completed, newTask.dueDate, newTask.id);
                         saveData('todoCards', todoCardsData);
@@ -1477,14 +1474,11 @@
                     }
                 });
                 document.getElementById('newPageBtn').addEventListener('click', createTodoCard);
-
-                // --- Reminders ---
-                // ... (Reminder logic will go here)
-
-                // --- And so on for all other features ---
+                
+                // --- All other features ---
+                // ... The rest of the setupAllFeatures function would go here ...
             }
         }
-
     </script>
 </body>
 </html>
