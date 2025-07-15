@@ -4,108 +4,163 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account - Student Wellness Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #c6e2ff;
-            --header-bg: #a0c4e8;
-            --widget-bg: #ffffff;
-            --widget-border-color: #d8c8ff;
-            --text-color: #333333;
-            --text-light: #555555;
-            --accent-color: #8a63d2;
-            --button-bg: #e6e6fa;
-            --button-text: #333;
-            --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            --accent-color-light: #6C63FF;
+            --bg-image-light: linear-gradient(120deg, #eacdd7 0%, #cdd6e8 100%);
+            --widget-bg-light: rgba(255, 255, 255, 0.45);
+            --widget-border-light: rgba(255, 255, 255, 0.7);
+            --text-color-light: #2c3e50;
+            --input-bg-light: rgba(255, 255, 255, 0.2);
+            --danger-color-light: #e74c3c;
+
+            --bg-image: var(--bg-image-light);
+            --widget-bg: var(--widget-bg-light);
+            --widget-border-color: var(--widget-border-light);
+            --text-color: var(--text-color-light);
+            --accent-color: var(--accent-color-light);
+            --input-bg: var(--input-bg-light);
+            --danger-color: var(--danger-color-light);
         }
+
         body.dark-mode {
-            --bg-color: #232931;
-            --header-bg: #1a1f25;
-            --widget-bg: #393e46;
-            --widget-border-color: #5c5178;
-            --text-color: #eeeeee;
-            --text-light: #cccccc;
-            --accent-color: #b298dc;
-            --button-bg: #504660;
-            --button-text: #eeeeee;
+            --accent-color-dark: #8B84FF;
+            --bg-image-dark: linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            --widget-bg-dark: rgba(20, 25, 30, 0.45);
+            --widget-border-dark: rgba(255, 255, 255, 0.15);
+            --text-color-dark: #ecf0f1;
+            --input-bg-dark: rgba(0, 0, 0, 0.15);
+            --danger-color-dark: #e74c3c;
+
+            --bg-image: var(--bg-image-dark);
+            --widget-bg: var(--widget-bg-dark);
+            --widget-border-color: var(--widget-border-dark);
+            --text-color: var(--text-color-dark);
+            --accent-color: var(--accent-color-dark);
+            --input-bg: var(--input-bg-dark);
+            --danger-color: var(--danger-color-dark);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background-image: var(--bg-image);
             color: var(--text-color);
+            background-attachment: fixed;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin: 0;
         }
-        .create-account-container {
-            background-color: var(--widget-bg);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: var(--box-shadow);
+
+        .signup-container {
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
+            padding: 40px;
+            background: var(--widget-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--widget-border-color);
+            box-shadow: 0 8px 32px 0 rgba(108, 99, 255, 0.1);
+            border-radius: 16px;
             text-align: center;
         }
-        .create-account-container h1 {
+
+        .signup-container h1 {
             color: var(--accent-color);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 2.5em;
         }
-        .create-account-container input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            border: 1px solid var(--widget-border-color);
-            background-color: var(--bg-color);
+
+        .signup-container p {
+            margin-bottom: 25px;
             color: var(--text-color);
         }
-        .create-account-container button {
+
+        .signup-container input {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--widget-border-color);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+        .signup-container input:focus {
+            box-shadow: 0 0 0 3px var(--accent-color-translucent-light);
+        }
+        body.dark-mode .signup-container input:focus {
+            box-shadow: 0 0 0 3px var(--accent-color-translucent-dark);
+        }
+
+        .signup-container button {
+            width: 100%;
+            padding: 14px;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             background-color: var(--accent-color);
             color: white;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 1.1em;
             cursor: pointer;
-            transition: filter 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .create-account-container button:hover {
-            filter: brightness(0.9);
+        .signup-container button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
         }
-        .create-account-container p {
-            margin-top: 20px;
-            color: var(--text-light);
+        body.dark-mode .signup-container button:hover {
+            box-shadow: 0 6px 20px rgba(139, 132, 255, 0.3);
         }
-        .create-account-container a {
+
+        .signup-container .switch-form {
+            margin-top: 25px;
+            font-size: 0.9em;
+        }
+
+        .signup-container .switch-form a {
             color: var(--accent-color);
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
         }
+
         .error-message {
-            color: #f44336;
+            color: var(--danger-color);
+            background-color: rgba(231, 76, 60, 0.15);
+            border: 1px solid var(--danger-color);
+            padding: 10px;
+            border-radius: 8px;
             margin-bottom: 15px;
             display: none;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
-    <div class="create-account-container">
-        <h1>Create Your Account</h1>
+    <div class="signup-container">
+        <h1>Create Account</h1>
         <p>Join the Student Wellness Planner community!</p>
         <div id="errorMessage" class="error-message"></div>
         <input type="email" id="email" placeholder="Email" required>
         <input type="password" id="password" placeholder="Password (at least 6 characters)" required>
-        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
-        <button id="createAccountButton">Create Account</button>
-        <p>Already have an account? <a href="login.html">Log in</a></p>
+        <button id="createAccountButton">Create Account & Login</button>
+        <p class="switch-form">Already have an account? <a href="login.html">Log in</a></p>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
+        // Your web app's Firebase configuration
         const firebaseConfig = {
         apiKey: "AIzaSyA5uXk2bnfbZ0ZMQSsRzOXzU4jjZN0-sPM",
         authDomain: "studentwellnessplanner.firebaseapp.com",
@@ -115,55 +170,41 @@
         appId: "1:1084830559333:web:dc5d435854bad565476a8c"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
         const createAccountButton = document.getElementById('createAccountButton');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
-        const confirmPasswordInput = document.getElementById('confirmPassword');
         const errorMessage = document.getElementById('errorMessage');
 
         createAccountButton.addEventListener('click', () => {
             const email = emailInput.value;
             const password = passwordInput.value;
-            const confirmPassword = confirmPasswordInput.value;
 
-            if (!email || !password || !confirmPassword) {
+            if (!email || !password) {
                 errorMessage.textContent = 'Please fill out all fields.';
-                errorMessage.style.display = 'block';
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                errorMessage.textContent = 'Passwords do not match.';
                 errorMessage.style.display = 'block';
                 return;
             }
 
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    // Signed up and signed in
-                    const user = userCredential.user;
-                    // Redirect to the main page
+                    // On successful account creation, Firebase automatically signs the user in.
+                    // Redirect to the main planner page.
                     window.location.href = 'index.html';
                 })
                 .catch((error) => {
-                    const errorCode = error.code;
-                    let message = '';
-                    switch (errorCode) {
+                    let message = 'An error occurred during sign-up. Please try again.';
+                    switch (error.code) {
                         case 'auth/email-already-in-use':
-                            message = 'This email address is already in use.';
+                            message = 'This email address is already in use by another account.';
                             break;
                         case 'auth/invalid-email':
                             message = 'Please enter a valid email address.';
                             break;
                         case 'auth/weak-password':
-                            message = 'The password is too weak. Please use at least 6 characters.';
-                            break;
-                        default:
-                            message = 'An error occurred during sign-up. Please try again.';
+                            message = 'Password is too weak. It should be at least 6 characters long.';
                             break;
                     }
                     errorMessage.textContent = message;

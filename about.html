@@ -4,143 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Student Wellness Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Custom Properties for Theming (replicated from index.html for consistency) */
         :root {
-            --bg-color: #c6e2ff; /* Light blue background */
-            --header-bg: #a0c4e8; /* Slightly darker blue for header */
-            --widget-bg: #ffffff;
-            --widget-border-color: #d8c8ff; /* Light purple */
-            --text-color: #333333;
-            --text-light: #555555;
-            --accent-color: #8a63d2; /* Darker purple for accents */
-            --nav-link-color: #000000;
-            --nav-link-hover-bg: #b0d0f0;
-            --progress-bar-bg: #e0e0e0;
-            --progress-bar-fill-1: #b298dc; /* Medium purple */
-            --progress-bar-fill-2: #8a63d2; /* Darker purple */
-            --icon-color: #333333;
-            --button-bg: #e6e6fa; /* Lavender for buttons */
-            --button-text: #333;
-            --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            --accent-color-light: #6C63FF;
+            --accent-color-translucent-light: rgba(108, 99, 255, 0.15);
+            --bg-image-light: linear-gradient(120deg, #eacdd7 0%, #cdd6e8 100%);
+            --widget-bg-light: rgba(255, 255, 255, 0.45);
+            --widget-border-light: rgba(255, 255, 255, 0.7);
+            --header-bg-light: rgba(255, 255, 255, 0.35);
+            --text-color-light: #2c3e50;
+            --shadow-light: 0 8px 32px 0 rgba(108, 99, 255, 0.1);
+            --header-shadow-light: 0 3px 25px -5px rgba(108, 99, 255, 0.15);
+            
+            --bg-image: var(--bg-image-light);
+            --widget-bg: var(--widget-bg-light);
+            --widget-border-color: var(--widget-border-light);
+            --header-bg: var(--header-bg-light);
+            --text-color: var(--text-color-light);
+            --accent-color: var(--accent-color-light);
+            --nav-link-color: var(--text-color-light);
+            --nav-link-hover-bg: rgba(255, 255, 255, 0.2);
+            --box-shadow: var(--shadow-light);
+            --header-shadow: var(--header-shadow-light);
         }
 
         body.dark-mode {
-            --bg-color: #232931;
-            --header-bg: #1a1f25;
-            --widget-bg: #393e46;
-            --widget-border-color: #5c5178;
-            --text-color: #eeeeee;
-            --text-light: #cccccc;
-            --accent-color: #b298dc;
-            --nav-link-color: #eeeeee;
-            --nav-link-hover-bg: #4a5058;
-            --progress-bar-bg: #555555;
-            --progress-bar-fill-1: #9370DB; /* Medium Orchid */
-            --progress-bar-fill-2: #8a63d2;
-            --icon-color: #eeeeee;
-            --button-bg: #504660;
-            --button-text: #eeeeee;
-            --box-shadow: 0 2px 5px rgba(255,255,255,0.05);
+            --accent-color-dark: #8B84FF;
+            --bg-image-dark: linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            --widget-bg-dark: rgba(20, 25, 30, 0.45);
+            --widget-border-dark: rgba(255, 255, 255, 0.15);
+            --header-bg-dark: rgba(20, 25, 30, 0.35);
+            --text-color-dark: #ecf0f1;
+            --shadow-dark: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --header-shadow-dark: 0 3px 25px -5px rgba(0, 0, 0, 0.25);
+
+            --bg-image: var(--bg-image-dark);
+            --widget-bg: var(--widget-bg-dark);
+            --widget-border-color: var(--widget-border-dark);
+            --header-bg: var(--header-bg-dark);
+            --text-color: var(--text-color-dark);
+            --accent-color: var(--accent-color-dark);
+            --nav-link-color: var(--text-color-dark);
+            --nav-link-hover-bg: rgba(0, 0, 0, 0.2);
+            --box-shadow: var(--shadow-dark);
+            --header-shadow: var(--header-shadow-dark);
         }
 
-        /* Basic Reset and Body Styles (replicated) */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Poppins', 'Segoe UI', 'Roboto', sans-serif;
+            background-image: var(--bg-image);
             color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
-            padding-top: 60px; /* For fixed header */
-            display: flex; /* Use flexbox for main content */
+            transition: background-image 0.5s, color 0.5s;
+            background-attachment: fixed;
+            padding-top: 80px;
+            padding-left: 20px;
+            padding-right: 20px;
+            display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Ensure body takes full viewport height */
+            min-height: 100vh;
         }
 
-        /* Header (replicated) */
+        .glass {
+            background: var(--widget-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--widget-border-color);
+            box-shadow: var(--box-shadow);
+            border-radius: 16px;
+            transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+        }
+        
         header {
-            background-color: var(--header-bg);
-            color: var(--nav-link-color);
-            padding: 0 20px;
+            padding: 0 10px 0 20px;
             height: 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+            top: 10px;
+            right: 10px;
+            left: 10px;
             z-index: 1000;
-            box-shadow: var(--box-shadow);
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--header-shadow);
+            border-radius: 16px;
+            border: 1px solid var(--widget-border-color);
         }
 
         .logo {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
+            position: relative;
             background-color: white;
             border-radius: 50%;
             border: 2px solid var(--widget-border-color);
+            flex-shrink: 0;
+        }
+        .logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
+        header nav {
+            margin: 0 20px;
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
         header nav a {
             color: var(--nav-link-color);
             text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            padding: 5px 0;
-            border-bottom: 2px solid transparent;
-            transition: border-bottom 0.3s;
+            margin: 0 10px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            transition: background-color 0.3s, color 0.3s;
         }
-
         header nav a:hover {
-            border-bottom: 2px solid var(--accent-color);
+            background-color: var(--nav-link-hover-bg);
+            color: var(--accent-color);
         }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-        }
-
-        .search-bar input[type="search"] {
-            padding: 8px 12px;
-            border: 1px solid var(--widget-border-color);
-            border-right: none;
-            border-radius: 20px 0 0 20px;
-            background-color: var(--widget-bg);
-            color: var(--text-color);
-            min-width: 200px;
-        }
-        .search-bar input[type="search"]::placeholder {
-            color: var(--text-light);
-        }
-
-        .search-bar button {
-            padding: 8px 12px;
-            background-color: var(--widget-bg);
-            border: 1px solid var(--widget-border-color);
-            border-left: none;
-            border-radius: 0 20px 20px 0;
-            cursor: pointer;
-            color: var(--icon-color);
-        }
-
-        /* About Us Page Specific Styles */
+        
         .about-us-content {
-            flex-grow: 1; /* Allows content to take up available space */
-            padding: 40px 20px;
+            flex-grow: 1;
+            padding: 40px;
             max-width: 800px;
-            margin: 0 auto; /* Center the content */
-            background-color: var(--widget-bg);
-            border-radius: 12px;
-            box-shadow: var(--box-shadow);
-            margin-top: 30px; /* Space from header */
-            margin-bottom: 30px; /* Space before potential footer/bottom elements */
+            margin: 20px auto;
+            background: var(--widget-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--widget-border-color);
+            box-shadow: var(--box-shadow);
+            border-radius: 16px;
         }
 
         .about-us-content h1 {
@@ -148,6 +153,19 @@
             margin-bottom: 25px;
             font-size: 2.5em;
             text-align: center;
+            font-weight: 700;
+        }
+
+        .about-us-content section { margin-bottom: 30px; }
+        .about-us-content section:last-of-type { margin-bottom: 0; }
+
+        .about-us-content h2 {
+            color: var(--text-color);
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 600;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 8px;
         }
 
         .about-us-content p {
@@ -157,215 +175,146 @@
             margin-bottom: 20px;
             text-align: justify;
         }
+        .about-us-content p:last-child { margin-bottom: 0; }
+
+        .about-us-content ul {
+            list-style: none;
+            padding-left: 0;
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+        .about-us-content ul li {
+            margin-bottom: 5px;
+            padding-left: 25px;
+            position: relative;
+        }
+        .about-us-content ul li::before {
+            content: '•';
+            color: var(--accent-color);
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
 
         .inspiration-quote {
-        font-style: italic;
-        font-size: 1.2em;
-        text-align: center;
-        color: var(--accent-color);
-        margin-bottom: 30px;
-        padding: 10px 20px;
-        border-left: 4px solid var(--accent-color);
-        background-color: rgba(138, 99, 210, 0.05);
-        border-radius: 8px;
+            font-style: italic;
+            font-size: 1.2em;
+            text-align: center;
+            color: var(--accent-color);
+            margin-top: 40px;
+            padding: 20px 30px;
+            border-left: 4px solid var(--accent-color);
+            background-color: var(--accent-color-translucent-light);
+            border-radius: 12px;
+            box-shadow: var(--box-shadow);
+        }
+        body.dark-mode .inspiration-quote {
+             background-color: var(--accent-color-translucent-dark);
         }
 
         .inspiration-quote span {
             display: block;
-            margin-top: 8px;
+            margin-top: 10px;
             font-size: 0.95em;
             color: var(--text-light);
+            font-weight: 500;
         }
 
-
-        /* Fixed Bottom Left Controls (replicated, but adapted for about.html) */
-        .fixed-bottom-left {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 1000;
-        }
-
-        .theme-toggle {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            font-size: 0.9em;
-            color: var(--text-light);
-            background-color: var(--widget-bg);
-            border: 1px solid var(--widget-border-color);
-            padding: 8px 12px;
-            border-radius: 20px;
-            box-shadow: var(--box-shadow);
-        }
-
-        #themeIcon {
-            font-size: 1.5em;
-            margin-right: 8px;
-            color: var(--icon-color);
-        }
-
-        /* Responsive Adjustments (replicated and adapted) */
-        @media (max-width: 768px) { /* Mobile */
-            header {
-                padding: 0 10px;
-                height: auto;
-                flex-direction: column;
-                align-items: flex-start;
-                padding-bottom: 10px;
-            }
-            body {
-                padding-top: 120px; /* Adjust for taller header */
-            }
-            header nav {
-                margin-top:10px;
-                width: 100%;
-                display: flex;
-                justify-content: space-around;
-            }
-            header nav a {
-                margin: 0 5px;
-            }
-            .search-bar {
-                margin-top: 10px;
-                width: 100%;
-            }
-            .search-bar input[type="search"] {
-                flex-grow: 1;
-            }
-             .fixed-bottom-left{
-                flex-direction: row; /* horizontal for small screens */
-                align-items: center;
-                width: calc(100% - 20px);
-                justify-content: space-around;
-                background-color: var(--header-bg); /* Give it a backdrop */
-                padding: 5px;
-                border-radius: 8px;
-                left: 10px; /* Adjust left for mobile */
-                bottom: 10px; /* Adjust bottom for mobile */
-             }
-             .theme-toggle {
-                padding: 5px 8px;
-             }
-             .about-us-content {
-                margin-top: 20px;
-                margin-bottom: 20px;
-                padding: 20px 15px;
-             }
+        @media (max-width: 768px) {
+            body { padding-top: 80px; padding-left: 10px; padding-right: 10px; }
+            .about-us-content { margin-top: 20px; margin-bottom: 20px; padding: 20px 15px; }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo"></div>
-        <nav>
-            <a href="index.html" id="navHome">Home</a>
-            <a href="about.html" id="navAbout">About Us</a>
-            <a href="resources.html" id="navResources">Resources</a>
-        </nav>
-        <div class="search-bar">
-            <input type="search" id="searchInput" placeholder="Search...">
-            <button id="searchButton">&#128269;</button>
+        <div class="logo">
+            <img id="avatarImage" src="https://cdn.vectorstock.com/i/1000v/66/13/default-avatar-profile-icon-social-media-user-vector-49816613.jpg" alt="User Avatar">
         </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="resources.html">Resources</a>
+        </nav>
     </header>
 
-    <main class="about-us-content">
-    <h1>About Us</h1>
-
-    <section>
-        <h2 style="color: var(--accent-color); font-size: 1.4em; margin-bottom: 10px;">🎓 Who We Are</h2>
-        <p>
-        We're a team of college students who understand the struggles of balancing school, work, and life. That’s why we built this digital planner, to help students like us stay organized, motivated, and mentally balanced.
-        </p>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-color); font-size: 1.4em; margin-top: 30px; margin-bottom: 10px;">🛠️ What We Offer</h2>
-        <ul style="list-style: none; padding-left: 0; font-size: 1.1em; line-height: 1.8;">
-        <li>📅 Calendar & To-Do Checklists</li>
-        <li>💡 Daily Motivational Quotes</li>
-        <li>🧠 Mental Health Widget</li>
-        <li>📈 Progress & Mood Tracking</li>
-        <li>🎉 Celebration Confetti</li>
-        <li>📚 Resources for students</li>
-        <li>🌙 Light/Dark Mode Toggle</li>
-        <li>✨ Customizable Icons</li>
-        </ul>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-color); font-size: 1.4em; margin-top: 30px; margin-bottom: 10px;">💜 Our Mission</h2>
-        <p>
-        This is more than just a productivity tool, it's a supportive space built by students, for students. We believe your planner should feel like a friend cheering you on, not just a list of deadlines.
-        
-        </p>
-    </section>
-
-    <blockquote class="inspiration-quote">
-        "Someone’s sitting in the shade today because someone planted a tree a long time ago."<br>
-        <span>– Warren Buffett</span>
-    </blockquote>
-
+    <main class="about-us-content glass">
+        <h1>About Us</h1>
+        <section>
+            <h2>🎓 Who We Are</h2>
+            <p>
+            We're a team of college students who understand the struggles of balancing school, work, and life. That’s why we built this digital planner, to help students like us stay organized, motivated, and mentally balanced.
+            </p>
+        </section>
+        <section>
+            <h2>🛠️ What We Offer</h2>
+            <ul>
+                <li>📅 Calendar & To-Do Checklists</li>
+                <li>💡 Daily Motivational Quotes</li>
+                <li>🧠 Mental Health Widget</li>
+                <li>📈 Progress & Mood Tracking</li>
+                <li>🎉 Celebration Confetti</li>
+                <li>📚 Resources for students</li>
+                <li>🌙 Light/Dark Mode Toggle</li>
+                <li>✨ Customizable Icons</li>
+                <li>🍅 Pomodoro Timer</li>
+                <li>✅ Habit Tracker</li>
+                <li>➕ Calculator</li>
+            </ul>
+        </section>
+        <section>
+            <h2>💜 Our Mission</h2>
+            <p>
+            This is more than just a productivity tool, it's a supportive space built by students, for students. We believe your planner should feel like a friend cheering you on, not just a list of deadlines.
+            </p>
+        </section>
+        <blockquote class="inspiration-quote">
+            "Someone’s sitting in the shade today because someone planted a tree a long time ago."<br>
+            <span>– Warren Buffett</span>
+        </blockquote>
     </main>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    <div class="fixed-bottom-left">
-        <div class="theme-toggle" id="themeToggleBtn">
-            <span id="themeIcon">☀️</span>
-            <span id="themeToggleText">Light/Dark mode Toggle</span>
-        </div>
-    </div>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyA5uXk2bnfbZ0ZMQSsRzOXzU4jjZN0-sPM",
+        authDomain: "studentwellnessplanner.firebaseapp.com",
+        projectId: "studentwellnessplanner",
+        storageBucket: "studentwellnessplanner.firebasestorage.app",
+        messagingSenderId: "1084830559333",
+        appId: "1:1084830559333:web:dc5d435854bad565476a8c"
+        };
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- THEME TOGGLE ---
-            const themeToggleBtn = document.getElementById('themeToggleBtn');
-            const themeIcon = document.getElementById('themeIcon');
-            const body = document.body;
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-            const currentTheme = localStorage.getItem('theme');
-            if (currentTheme === 'dark') {
-                body.classList.add('dark-mode');
-                themeIcon.textContent = '🌙';
-            } else {
-                themeIcon.textContent = '☀️';
-            }
-
-            themeToggleBtn.addEventListener('click', () => {
-                body.classList.toggle('dark-mode');
-                if (body.classList.contains('dark-mode')) {
-                    themeIcon.textContent = '🌙';
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    themeIcon.textContent = '☀️';
-                    localStorage.setItem('theme', 'light');
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const userDocRef = doc(db, 'users', user.uid);
+                const userDoc = await getDoc(userDocRef);
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    // Apply Theme
+                    if (userData.theme === 'dark') {
+                        document.body.classList.add('dark-mode');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                    }
+                    // Apply Avatar
+                    const avatarImage = document.getElementById('avatarImage');
+                    if (avatarImage && userData.avatar) {
+                        avatarImage.src = userData.avatar;
+                    }
                 }
-            });
-
-            // --- PLACEHOLDER ACTIONS (adapted for about.html) ---
-            document.getElementById('searchButton').addEventListener('click', () => {
-                const searchTerm = document.getElementById('searchInput').value;
-                if(searchTerm) alert(`Searching for: ${searchTerm} (Search functionality to be implemented)`);
-                else alert('Please enter a search term.');
-            });
-            
-            // For navHome and navAbout, the default behavior of the <a> tag is desired (navigation).
-            // No e.preventDefault() is needed if you want them to navigate.
-            // The commented out e.preventDefault() correctly allows navigation.
-            document.getElementById('navHome').addEventListener('click', (e) => { /* e.preventDefault(); */ }); 
-            document.getElementById('navAbout').addEventListener('click', (e) => { /* e.preventDefault(); */ }); 
-            
-            // For navResources:
-            // We remove e.preventDefault() to allow navigation to resources.html
-            // We remove the alert() to get rid of the placeholder popup.
-            document.getElementById('navResources').addEventListener('click', (e) => {
-                // No e.preventDefault(); // This allows the link to navigate
-                // No alert(); // This removes the popup
-                // The link will now navigate to resources.html due to its href attribute
-            });
+            }
+            // If no user, the page will just use the default light theme.
         });
     </script>
 </body>
